@@ -1,0 +1,117 @@
+HTML
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Слайдер изображений</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="slider">
+        <button class="btn" id="prev">Назад</button>
+        <div class="slider-content">
+            <img id="slider-image" src="image1.jpg" alt="Слайд 1">
+        </div>
+        <button class="btn" id="next">Вперед</button>
+        <div class="slider-info">
+            <span id="slider-index">Изображение 1 из 5</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+CSS
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.slider {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    overflow: hidden;
+    width: 80%;
+    max-width: 800px;
+}
+
+.slider-content {
+    flex: 1;
+    text-align: center;
+}
+
+.slider-content img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.slider-info {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 16px;
+}
+
+JavaScript
+const images = [
+    'image1.jpg',
+    'image2.jpg',
+    'image3.jpg',
+    'image4.jpg',
+    'image5.jpg'
+];
+
+let currentIndex = 0;
+
+const imgElement = document.getElementById('slider-image');
+const indexElement = document.getElementById('slider-index');
+const prevButton = document.getElementById('prev');
+const nextButton = document.getElementById('next');
+
+function updateSlider() {
+    imgElement.src = images[currentIndex];
+    indexElement.textContent = `Изображение ${currentIndex + 1} из ${images.length}`;
+}
+
+function showPrevImage() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    updateSlider();
+}
+
+function showNextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    updateSlider();
+}
+
+prevButton.addEventListener('click', showPrevImage);
+nextButton.addEventListener('click', showNextImage);
+
+// Инициализируем слайдер
+updateSlider();
+
